@@ -29,6 +29,7 @@ File 'secondaccount.ps1' successfully created.
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/yourusername/steam-account-switcher.git
+git clone https://github.com/steamSwapAccount/steam-account-switcher.git
 cd steam-account-switcher
 python steam_switcher.py
+```
