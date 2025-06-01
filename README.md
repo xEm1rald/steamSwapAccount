@@ -3,7 +3,6 @@
 This Python script allows you to easily switch between Steam accounts on Windows.  
 It automatically generates a `.ps1` PowerShell script that updates the Windows registry and `loginusers.vdf` to set a specific account for auto-login and restarts Steam.
 
----
 
 ## How to use? Example:
 ```
