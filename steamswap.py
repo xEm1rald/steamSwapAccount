@@ -101,6 +101,10 @@ def main():
     print(f"Last Auto-Login: {auto_login}")
 
     accounts = parse_login_users(steam_path)
+    if not accounts:
+        print("File (loginusers.vdf) in steam directory is missing or corrupted.")
+        return
+
     for steam_id, account_name in accounts:
         print(f"SteamID: {steam_id} | AccountName: {account_name}")
 
