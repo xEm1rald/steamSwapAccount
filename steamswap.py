@@ -16,11 +16,11 @@ def get_reg() -> tuple[str, str]:
         return
 
 
-def create_steam_login(steam_id64: str, username: str, bat_path=None, steam_run_args=None) -> None:
+def create_steam_login(steam_id64: str, username: str, script_path=None, steam_run_args=None) -> None:
     """create .ps1 file"""
 
-    if not bat_path:
-        bat_path = f"{username}.ps1"
+    if not script_path:
+        script_path = f"{username}.ps1"
 
     if not steam_run_args:
         steam_run_args = '-silent'
@@ -73,10 +73,10 @@ f"""Start-Process "$steamPath\\Steam.exe" -ArgumentList "{steam_run_args}"
 
 Write-Host "Account swapped to $username ($steamID)" """)
 
-    with open(bat_path, "w", encoding="utf-8") as f:
+    with open(script_path, "w", encoding="utf-8") as f:
         f.write(powershell_script)
 
-    print(f"File '{bat_path}' successfully created.")
+    print(f"File '{script_path}' successfully created.")
 
 
 def parse_login_users(steam_path) -> list:
