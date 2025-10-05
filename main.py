@@ -1,12 +1,11 @@
-from login_users_vdf_helper import LoginUsersVDF
-from auto_login_user_reg import AutoLoginUser
-import utils
+from steam.auto_login_user_reg import AutoLoginUser
+from steam.login_users_vdf_helper import LoginUsersVDF
 import config
 
 
 def main():
-    print(AutoLoginUser.set("xem1rald"))
-
+    users_vdf = LoginUsersVDF(config.STEAM_PATH)
+    print(users_vdf)
 
 
 if __name__ == "__main__":

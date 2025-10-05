@@ -21,7 +21,6 @@ class LoginUsersVDF:
     def __init__(self, steam_path: str):
         self._path = os.path.join(steam_path, "config", "loginusers.vdf")
         data = self._get()
-        print(data)
         self.users: list[UserVDF, ...] = [
             UserVDF(
                 SteamID64 = user_steamid64,
