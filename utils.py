@@ -1,17 +1,24 @@
-import re
-import os
 import winreg
+import vdf
+import os
 
 
-def get_reg() -> tuple[str, str]:
+def get_reg(path: str, obj: str) -> tuple[str, str] | None:
     """:return: steam_path: str, auto_login: str"""
     try:
-        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Valve\Steam")
-        auto_login = winreg.QueryValueEx(key, "AutoLoginUser")[0]
-        steam_path = winreg.QueryValueEx(key, "SteamPath")[0]
+        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path)
+        query_obj = winreg.QueryValueEx(key, obj)[0]
         winreg.CloseKey(key)
 
-        return steam_path, auto_login
+        return query_obj
+    except WindowsError:
+        return
+
+def set_reg(path: str, obj: str, new_value: str) -> None:
+    try:
+        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_SET_VALUE)
+        winreg.SetValueEx(key, obj, 0, winreg.REG_SZ, new_value)
+        winreg.CloseKey(key)
     except WindowsError:
         return
 
@@ -77,51 +84,3 @@ Write-Host "Account swapped to $username ($steamID)" """)
         f.write(powershell_script)
 
     print(f"File '{script_path}' successfully created.")
-
-
-def parse_login_users(steam_path) -> list:
-    """:return: accounts: list"""
-    loginusers_path = os.path.join(steam_path, "config", "loginusers.vdf")
-    if not os.path.exists(loginusers_path):
-        return None
-
-    with open(loginusers_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    accounts = re.findall(r'"([0-9]+)"\s*{\s*"AccountName"\s*"([^"]+)"', content)
-    return accounts
-
-
-def main():
-    steam_path, auto_login = get_reg()
-    if not steam_path or not auto_login:
-        print("Something missing in registry. Are you logged in account?")
-        return
-
-    print(f"Last Auto-Login: {auto_login}")
-
-    accounts = parse_login_users(steam_path)
-    if not accounts:
-        print("File (loginusers.vdf) in steam directory is missing or corrupted.")
-        return
-
-    for steam_id, account_name in accounts:
-        print(f"SteamID: {steam_id} | AccountName: {account_name}")
-
-    selected_steamid = input("Select Account to create shortcut (SteamID): ")
-
-    accounts = {steam_id: account_name for steam_id, account_name in accounts}
-    if not selected_steamid in accounts.keys():
-        print("Invalid SteamID.")
-        return
-
-    selected_steam_account = accounts[selected_steamid]
-
-    create_steam_login(
-        steam_id64=selected_steamid,
-        username=selected_steam_account,
-    )
-
-
-if __name__ == '__main__':
-    main()

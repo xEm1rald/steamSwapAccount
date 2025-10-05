@@ -1,0 +1,4 @@
+.idea
+backup
+__pycache__/
+*.ps1
