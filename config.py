@@ -1,6 +1,7 @@
 import logging
 import sys
 import os
+
 from utils import get_reg
 
 
@@ -35,3 +36,5 @@ logger = setup_logger("LOG", level=logging.DEBUG)
 
 STEAM_REGISTRY_PATH = r"Software\Valve\Steam"
 STEAM_PATH = get_reg(STEAM_REGISTRY_PATH, "SteamPath")
+
+APP_THREAD = None

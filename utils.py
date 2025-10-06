@@ -14,6 +14,7 @@ def get_reg(path: str, obj: str) -> tuple[str, str] | None:
     except WindowsError:
         return
 
+
 def set_reg(path: str, obj: str, new_value: str) -> None:
     try:
         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_SET_VALUE)
