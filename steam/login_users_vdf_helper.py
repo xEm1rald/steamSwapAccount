@@ -1,20 +1,7 @@
 import os
 import vdf
 
-from dataclasses import dataclass, asdict
-
-
-@dataclass
-class UserVDF:
-    SteamID64: int | None
-    PersonaName: str | None
-    AccountName: str | None
-    RememberPassword: int | None
-    WantsOfflineMode: int | None
-    SkipOfflineModeWarning: int | None
-    AllowAutoLogin: int | None
-    MostRecent: int | None
-    Timestamp: int | None
+from classes import UserVDF
 
 
 class LoginUsersVDF:
@@ -51,8 +38,7 @@ class LoginUsersVDF:
         users = {}
 
         for user in self.users:
-            user: UserVDF
-            data = asdict(user)
+            data = UserVDF.todict()
             data.pop("SteamID64")
             users[user.SteamID64] = data
 

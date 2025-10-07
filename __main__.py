@@ -17,5 +17,5 @@ if __name__ == "__main__":
     proc = run_app(os.path.join("app", "app.py"))
 
     # start browser window
-    webview.create_window("Steam Swap Account", "http://localhost:8501/", frameless=False, width=1000, height=700)
+    webview.create_window("Steam Swap Account", "http://localhost:8501/", frameless=False, width=1500, height=700)
     webview.start()
