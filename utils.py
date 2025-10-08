@@ -24,7 +24,14 @@ def set_reg(path: str, obj: str, new_value: str) -> None:
         return
 
 
-def create_steam_login(steam_id64: str, username: str, script_path=None, steam_run_args=None) -> None:
+def get_desktop_path(filename: str) -> str:
+    path = os.path.join(os.path.expanduser('~'), 'Desktop')
+    if filename:
+        path = os.path.join(path, filename)
+    return path
+
+
+def create_steam_login_shortcut(steam_id64: str, username: str, script_path=None, steam_run_args=None) -> None:
     """create .ps1 file"""
 
     if not script_path:
@@ -83,5 +90,3 @@ Write-Host "Account swapped to $username ($steamID)" """)
 
     with open(script_path, "w", encoding="utf-8") as f:
         f.write(powershell_script)
-
-    print(f"File '{script_path}' successfully created.")
